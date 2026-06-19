@@ -1,0 +1,38 @@
+{
+  "name": "vitaflow-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "vue": "latest",
+    "vue-router": "latest",
+    "pinia": "latest",
+    "axios": "latest",
+    "@vueuse/core": "latest",
+    "vuedraggable": "latest",
+    "sortablejs": "latest",
+    "lucide-vue-next": "latest",
+    "class-variance-authority": "latest",
+    "clsx": "latest",
+    "tailwind-merge": "latest",
+    "radix-vue": "latest",
+    "markdown-it": "latest",
+    "dompurify": "latest",
+    "pdfjs-dist": "^6.0.227"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "vite": "latest",
+    "tailwindcss": "latest",
+    "@tailwindcss/postcss": "latest",
+    "postcss": "latest",
+    "autoprefixer": "latest",
+    "vue-tsc": "latest"
+  }
+}

@@ -1,0 +1,112 @@
+{% macro render_section(section, resume) %}
+  {% set key = section.key %}
+  {% set data = section.data %}
+  {% if key != 'basics' and data %}
+    <section class="section section-{{ key }}">
+      <h2 class="section-title">{{ section.title }}</h2>
+      {% if key == 'summary' %}
+        <div class="markdown-body">{{ data.content|markdown|safe }}</div>
+      {% elif key == 'education' %}
+        {% for item in data %}
+          <div class="experience-item">
+            <div class="item-head">
+              <strong>
+                {{ item.school }}
+                {% if item.major or item.degree %}
+                  <span class="inline-meta">
+                    {% if item.major %}{{ item.major }}{% endif %}
+                    {% if item.major and item.degree %} · {% endif %}
+                    {% if item.degree %}{{ item.degree }}{% endif %}
+                  </span>
+                {% endif %}
+              </strong>
+              {% if item.start_date or item.end_date %}
+                <span>
+                  {% if item.start_date %}{{ item.start_date }}{% endif %}
+                  {% if item.start_date and item.end_date %} - {% endif %}
+                  {% if item.end_date %}{{ item.end_date }}{% endif %}
+                </span>
+              {% endif %}
+            </div>
+            {% if item.description %}<div class="markdown-body">{{ item.description|markdown|safe }}</div>{% endif %}
+          </div>
+        {% endfor %}
+      {% elif key == 'skills' %}
+        {% for item in data %}
+          <div class="experience-item">
+            <div class="item-head"><strong>{{ item.name }}</strong></div>
+            {% if item.keywords %}
+              <div class="tag-row">
+                {% for tag in item.keywords|split_tags %}<span>{{ tag }}</span>{% endfor %}
+              </div>
+            {% endif %}
+            {% if item.description %}<div class="markdown-body">{{ item.description|markdown|safe }}</div>{% endif %}
+          </div>
+        {% endfor %}
+      {% elif key == 'work' %}
+        {% for item in data %}
+          <div class="experience-item">
+            <div class="item-head">
+              <strong>
+                {% if item.company %}{{ item.company }}{% endif %}
+                {% if item.company and item.position %} · {% endif %}
+                {% if item.position %}{{ item.position }}{% endif %}
+              </strong>
+              {% if item.start_date or item.end_date %}
+                <span>
+                  {% if item.start_date %}{{ item.start_date }}{% endif %}
+                  {% if item.start_date and item.end_date %} - {% endif %}
+                  {% if item.end_date %}{{ item.end_date }}{% endif %}
+                </span>
+              {% endif %}
+            </div>
+            {% if item.description %}<div class="markdown-body">{{ item.description|markdown|safe }}</div>{% endif %}
+            {% if item.highlights %}<div class="markdown-body">{{ item.highlights|markdown|safe }}</div>{% endif %}
+          </div>
+        {% endfor %}
+      {% elif key == 'projects' %}
+        {% for item in data %}
+          <div class="experience-item">
+            <div class="item-head">
+              <strong>
+                {% if item.name %}{{ item.name }}{% endif %}
+                {% if item.name and item.role %} · {% endif %}
+                {% if item.role %}{{ item.role }}{% endif %}
+              </strong>
+              {% if item.start_date or item.end_date %}
+                <span>
+                  {% if item.start_date %}{{ item.start_date }}{% endif %}
+                  {% if item.start_date and item.end_date %} - {% endif %}
+                  {% if item.end_date %}{{ item.end_date }}{% endif %}
+                </span>
+              {% endif %}
+            </div>
+            {% if item.tech_stack %}
+              <div class="item-sub">
+                技术栈：{% if item.tech_stack is string %}{{ item.tech_stack }}{% else %}{{ item.tech_stack|join(' / ') }}{% endif %}
+              </div>
+            {% endif %}
+            {% if item.description %}<div class="markdown-body">{{ item.description|markdown|safe }}</div>{% endif %}
+            {% if item.highlights %}<div class="markdown-body">{{ item.highlights|markdown|safe }}</div>{% endif %}
+          </div>
+        {% endfor %}
+      {% elif key == 'awards' %}
+        {% for item in data %}
+          <div class="experience-item">
+            <div class="item-head"><strong>{{ item.name }}</strong>{% if item.date %}<span>{{ item.date }}</span>{% endif %}</div>
+            {% if item.description %}<div class="markdown-body">{{ item.description|markdown|safe }}</div>{% endif %}
+          </div>
+        {% endfor %}
+      {% elif key.startswith('custom_') %}
+        {% for item in data.get('items', []) %}
+          {% if item.title or item.content %}
+            <div class="experience-item">
+              {% if item.title %}<div class="item-head"><strong>{{ item.title }}</strong></div>{% endif %}
+              {% if item.content %}<div class="markdown-body">{{ item.content|markdown|safe }}</div>{% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </section>
+  {% endif %}
+{% endmacro %}
